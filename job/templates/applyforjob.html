@@ -1,0 +1,23 @@
+{% load static %}
+
+
+{% block body %}
+
+
+{% include 'user_navigation.html' %}
+
+
+
+<h3 class="alert alert-light border rounded mt-4 mb-4 text-center " style="color:slateblue ">Apply For Job</h3>
+   <div class = "container shadow-lg py-2 pr-4" >
+    <form method="post" entype="multipart/form-data">
+        <div class = "form-row">
+            <label class="font-weight">Upload Resume</label>
+            <input type="file"  class="form-control" name="resume">
+   </div>
+    </form>
+
+         <input type="submit"  class="btn btn-danger mt-3" value="submit">
+    </div>
+
+{% endblock %}

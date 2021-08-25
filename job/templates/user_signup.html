@@ -1,0 +1,65 @@
+{% load static %}
+
+{% block body %}
+
+{%include 'navigation.html'%}
+<div class="container">
+    <div class="p-4 m-4">
+       <div class="col-lg-5 mx-auto border rounded pt-4">
+           <h3 class="alert alert-light border rounded">Create An Account</h3>
+           <form action="/user_signup" method="POST" enctype="multipart/from-data">
+
+               {% csrf_token %}
+
+
+               {% if error %}
+               <div class="alert alert-danger" role="alert">
+                    {{error}}
+                </div>
+               {% endif %}
+
+                <!--firstname-->
+                 <div class="form-group">
+                    <label for="">First Name</label>
+                    <input type="text" name="firstname"  value="{{values.first_name}}" class="form-control form-control-sm" placeholder="Enter Your First Name" >
+                  </div>
+                <!--lastname-->
+                  <div class="form-group">
+                    <label for="">Last Name</label>
+                    <input type="text" name="lastname"  value="{{values.last_name}}" class="form-control form-control-sm" placeholder="Enter Your Last Name">
+                  </div>
+                <!--gender-->
+                    <label >Gender</label>
+                    <div style="border:1px solid lightgray; padding:6px; border-redius:6px">
+                   <input type="radio" name="gender" value="male"> Male <input type="radio" name="gender" value="female"> Female
+                   </div>
+
+               <!--resume-->
+                  <div class="form-group">
+                    <label for="">Resume</label>
+                    <input type="file" name="resume"  value="{{values.resume}}" class="form-control form-control-sm" placeholder="Enter Your resume">
+                  </div>
+                <!--phone-->
+                  <div class="form-group">
+                    <label for="">Phone</label>
+                    <input type="text" name="phone"  value="{{values.phone}}" class="form-control form-control-sm" placeholder="Enter Your Phone Number">
+                  </div>
+               <!--email-->
+                  <div class="form-group">
+                    <label for="">Email</label>
+                    <input required type="email" name="email"  value="{{values.email}}" class="form-control form-control-sm" placeholder="Enter Your Email Id">
+                  </div>
+               <!--password-->
+                  <div class="form-group">
+                    <label for="">Password</label>
+                    <input type="password" name="password" id="" class="form-control form-control-sm " placeholder="Enter Your Password">
+                  </div>
+                <!--button-->
+                  <div class="form-group">
+                    <input class="btn btn-sm btn-info" type="submit" value="Create An Account">
+                  </div>
+           </form>
+       </div>
+    </div>
+</div>
+{% endblock %}

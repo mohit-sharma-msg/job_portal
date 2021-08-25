@@ -1,0 +1,31 @@
+{% load static %}
+
+
+<div style="background-color: black ;width:100%;height:220px">
+    <div class="container">
+     <div class="row">
+        <div class="col-md-4 mt-3">
+            <h3 class="text-white">Contact Information</h3>
+            <p style="color:white;font-size:14px"><i class="fa fa-map-marker text_danger"> Upper Bhaktiyana,Srinagar Garhwal</i></p>
+            <p style="color:white;font-size:14px"><i class="fa fa-envelope text_danger "> ms3663252@gmail.com</i></p>
+            <p style="color:white;font-size:14px"><i class="fa fa-mobile text_danger ">    +918602278216</i></p>
+            <p style="color:white;font-size:14px"><i class="fa fa-globe text_danger "> www.jobportal.com</i></p>
+        </div>
+            <div class="col-md-4 mt-3">
+                <h3 class="text-white">About</h3>
+                <p style="color:white; font-size:14px">job portal is a recruitment platform that provides hiring-related services to corporates/recruiters, placement agencies and to job seekers in India and overseas.it services like database access of resumes , job postings, advertising and listing on the site amongst others</p>
+            </div>
+            <div class="col-md-4 mt-3">
+                <h3 class="text-white">Notification</h3>
+                <p style="color:white; font-size:14px">If you want the extra information then send your email id</p>
+                <form method="post" class="form-inline">
+                {% csrf_token %}
+                <input type="email" name="emailid" placeholder="Email ID" required class="form-control mr">
+                <input type="submit" value="send" class="btn btn-primary">
+            </form>
+            </div>
+     </div>
+    </div>
+</div>
+
+

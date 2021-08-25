@@ -1,0 +1,92 @@
+{% load static %}
+
+
+{% block body %}
+
+
+{%include 'recruiter_navigation.html'%}
+
+
+
+           <h3 class="alert alert-light border rounded text-center">Edit job Detail</h3>
+           <form class="container mt-5" method="POST" enctype="multipart/form-data">
+               {% csrf_token %}
+
+
+                <!--Job Tiltle-->
+                 <div class="form-group">
+                    <label >Job Tiltle</label>
+                    <input type="text" name="title" class="form-control form-control-sm" value="{{job.title}}" >
+
+                  </div>
+
+               <div class="form-row">
+                <!--Start Date-->
+                  <div class="form-group col-md-6">
+                    <label>Start Date</label> <span style="color:red">[{{job.start_date}}"]</span>
+                    <input type="date" name="start_date" class="form-control form-control-sm" >
+                  </div>
+
+               <!--end date-->
+                  <div class="form-group col-md-6">
+                    <label>End Date</label> <span style="color:red">[{{job.end_date}}"]</span>
+                    <input type="date" name="end_date" class="form-control form-control-sm" value="{{job.end_date}}" >
+                  </div>
+
+
+
+                <!--Salary-->
+                  <div class="form-group col-md-6">
+                    <label>Salary(Per Month)</label>
+                    <input type="text" name="salary" class="form-control form-control-sm" value="{{job.salary}}" required>
+                  </div>
+
+                   <!--Company-->
+                <div class="form-group col-md-6">
+                    <label>Company</label>
+                    <input type="text" name="company" class="form-control form-control-sm" value="{{job.company}}" required>
+                  </div>
+
+
+                <!--Location-->
+                  <div class="form-group col-md-6">
+                    <label>Location</label>
+                    <input type="text" name="location" class="form-control form-control-sm" value="{{job.location}}" required>
+                  </div>
+
+
+                <!--Experience(In Years)-->
+                  <div class="form-group col-md-6">
+                    <label>Experience(In Years)</label>
+                    <input type="text" name="experience" class="form-control form-control-sm" value="{{job.experience}}" required>
+                  </div>
+
+
+                   <!--Description-->
+                  <div class="form-group col-md-6">
+                    <label>Description</label>
+                    <textarea name="description" class="form-control form-control-sm" value="{{job.description}}" ></textarea>
+                  </div>
+
+               <!--Skills-->
+                  <div class="form-group col-md-6">
+                    <label >Skills</label>
+                    <input type="text" name="skills" class="form-control form-control-sm" value="{{job.skills}}" required>
+                  </div>
+                   <!--Company Logo-->
+                  <div class="form-group col-md-6">
+                    <label>Company Logo</label>
+                     <img src="{{job.logo.url}}"  width="150" height='100'><a href="{% url 'change_companylogo' job.id %}">Change Company Logo</a>
+                  </div>
+                   </div>
+
+                <!--button-->
+                  <div class="form-group">
+                    <input class="btn btn btn-info " type="submit" value="Edit">
+                  </div>
+
+           </form>
+
+
+
+{% endblock %}

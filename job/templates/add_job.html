@@ -1,0 +1,99 @@
+{% load static %}
+
+
+{% block body %}
+
+
+{%include 'recruiter_navigation.html'%}
+
+
+
+           <h3 class="alert alert-light border rounded text-center">Add Jobs</h3>
+           <form class="container mt-5" action="/add_job" method="POST">
+               {% csrf_token %}
+
+
+                <!--Job Tiltle-->
+                 <div class="form-group">
+                    <label >Job Tiltle</label>
+                    <input type="text" name="title" class="form-control form-control-sm" placeholder="Enter Your Job Title" >
+
+                  </div>
+
+               <div class="form-row">
+                <!--Start Date-->
+                  <div class="form-group col-md-6">
+                    <label>Start Date</label>
+                    <input type="date" name="start_date" class="form-control form-control-sm" required>
+                  </div>
+
+               <!--end date-->
+                  <div class="form-group col-md-6">
+                    <label>End Date</label>
+                    <input type="date" name="end_date" class="form-control form-control-sm"  required>
+                  </div>
+
+
+
+                <!--Salary-->
+                  <div class="form-group col-md-6">
+                    <label>Salary(Per Month)</label>
+                    <input type="text" name="salary" class="form-control form-control-sm"  required>
+                  </div>
+
+               <!--Company Logo-->
+                  <div class="form-group col-md-6">
+                    <label>Company Logo</label>
+                    <input type="file" name="logo" class="form-control form-control-sm"  required>
+                  </div>
+
+
+
+                <!--Location-->
+                  <div class="form-group col-md-6">
+                    <label>Location</label>
+                    <input type="text" name="location" class="form-control form-control-sm"  required>
+                  </div>
+
+
+                <!--Experience(In Years)-->
+                  <div class="form-group col-md-6">
+                    <label>Experience(In Years)</label>
+                    <input type="text" name="experience" class="form-control form-control-sm"  required>
+                  </div>
+
+
+                   <!--Description-->
+                  <div class="form-group col-md-6">
+                    <label>Description</label>
+                    <textarea name="description" class="form-control form-control-sm"  required></textarea>
+                  </div>
+
+               <!--Skills-->
+                  <div class="form-group col-md-6">
+                    <label >Skills</label>
+                    <input type="text" name="skills" class="form-control form-control-sm"  required>
+                  </div>
+
+                <!--button-->
+                  <div class="form-group">
+                    <input class="btn btn btn-info" type="submit" value="Submit">
+                  </div>
+                   </div>
+           </form>
+
+
+{% ifequal error "no" %}
+<script>
+    alert("Job Detail Has Been Added");
+    windows.location = ('{% url 'job_list' %}');
+</script>
+{% endifequal %}
+
+{% ifequal error "yes" %}
+<script>
+    alert("Something Went Wrong, Try Again);
+</script>
+{% endifequal %}
+
+{% endblock %}

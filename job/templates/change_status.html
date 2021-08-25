@@ -1,0 +1,51 @@
+{% load static %}
+
+
+{% block body %}
+
+
+{% include 'admin_navigation.html' %}
+
+<div class="container">
+    <div class="p-14 m-14">
+       <div class="col-lg-4 mt-4 mb-4 mx-auto border rounded pt-4">
+           <h3 class="alert alert-light border rounded mt-4 mb-4" style="color:slateblue">View Recruiter - Pending</h3>
+<form action="/admin_login" method="POST">
+
+               {% csrf_token %}
+
+               <!--username-->
+                  <div class="form-group">
+                    <label >Recruiter Name</label>
+                    <input type="text" name="username" value="{{recruiter.user.first_name}} {{recruiter.user.last_name}}" class="form-control form-control-sm " placeholder="Enter Your Recruiter Name" >
+                  </div>
+               <!--status-->
+                  <div class="form-group">
+                    <label>Status</label>
+                    <select  class="form-control form-control-sm" name="status">
+                        <option value="Accept">Accept</option>
+                        <option value="Reject">Reject</option>
+                    </select>
+                  </div>
+                <!--button-->
+                  <div class="form-group">
+                    <input class="btn btn-sm btn-info col-lg-4" type="submit" value="Submit">
+                  </div>
+           </form>
+           </div>
+    </div>
+</div>
+{% ifequal error "no" %}
+<script>
+    alert("status changed successfully");
+    windows.location = ('{% url 'all_recruiters'%}');
+</script>
+{% endifequal %}
+
+{% ifequal error "yes" %}
+<script>
+    alert("Something Went Wrong, Try Again);
+</script>
+{% endifequal %}
+
+{% endblock %}

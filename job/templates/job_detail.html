@@ -1,0 +1,54 @@
+{% load static %}
+
+
+{% block body %}
+
+
+{% include 'user_navigation.html' %}
+
+<style>
+    tr{text-align:center}
+</style>
+
+
+<h3 class="alert alert-light border rounded mt-4 mb-4 text-center " style="color:slateblue ">Job Details</h3>
+<div class = "container shadow-lg py-2 pr-4" >
+  <div class="row">
+  <div class ='col-md-4 mt-4 pr-4'>
+    <img src="{{job.logo.url}}" style="width:300px ; height:200px">
+  </div>
+           <div class ='col-md-4 mt-2 pr-4'>
+               <h2>{{job.title}}</h2>
+               <p>{{job.recruiter.company}}<a href="{% url 'user_latestjobs' %}"> View All Jobs</a></p>
+               <a herf="#" class="'mr-2"><i class="fa fa-map-marker mr-2"></i>{{job.location}}</a>
+               <a herf="#"><i class="fa fa-calendar mr-2"></i>{{job.creationdate}}
+               <br>
+                   <strong><i class="fa fa-inr mr-2 mt-4">{{job.salary}}</i></strong>
+                  <div class="mt-4">
+                    <a href="{% url 'applyforjob' job.id %}"class="btn btn-danger" style="width;40px ; height:40px;color">Apply For This Job</a>
+                  </div>
+
+                   </div>
+  </div>
+
+      <div class=" mt-4 ">
+          <h4 style="font-size:20px">Overview</h4>
+          <p>{{job.description}}</p>
+
+          <h4 style="font-size:20px">Required Experience</h4>
+          <p>{{job.experience}} Years</p>
+
+          <h4 style="font-size:20px">Skills Required</h4>
+          <p>{{job.skills}}</p>
+
+          <h4 style="font-size:20px">Start Date For Applying</h4>
+          <p>{{job.start_date}}</p>
+
+          <h4 style="font-size:20px">End Date For Applying</h4>
+          <p>{{job.end_date}}</p>
+      </div>
+  </div>
+  </div>
+
+
+{% endblock %}

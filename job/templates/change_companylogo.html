@@ -1,0 +1,59 @@
+{% load static %}
+
+
+{% block body %}
+
+
+{%include 'recruiter_navigation.html'%}
+
+
+
+           <h3 class="alert alert-light border rounded text-center">Change Company Logo</h3>
+           <form class="container mt-5"  method="POST" enctype="multipart/form-data">
+               {% csrf_token %}
+
+
+                <!--Job Tiltle-->
+                 <div class="form-group">
+                    <label >Job Tiltle</label>
+                    <input type="text" readonly name="title" class="form-control form-control-sm" value="{{job.title}}" >
+
+                  </div>
+
+
+               <!--Company Logo-->
+                  <div class="form-group col-md-12">
+                    <label>Company Logo</label>
+                     <img src="{{job.logo.url}}"  width="150" height='100'>
+                  </div>
+
+
+
+                <!--Location-->
+                  <div class="form-group col-md-12">
+                    <label>Company Logo</label>
+                    <input type="file" name="logo"  required>
+                  </div>
+
+
+                <!--button-->
+                  <div class="form-group">
+                    <input class="btn btn btn-info " type="submit" value="Edit Logo">
+                  </div>
+                   </div>
+           </form>
+
+{% ifequal error "no" %}
+<script>
+    alert("Company Logo Has Been Updated");
+    windows.location = ('{% url 'change_companylogo' job.id %}');
+</script>
+{% endifequal %}
+
+{% ifequal error "yes" %}
+<script>
+    alert("Something Went Wrong, Try Again);
+</script>
+{% endifequal %}
+
+{% endblock %}
