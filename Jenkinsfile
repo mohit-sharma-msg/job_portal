@@ -8,7 +8,7 @@ pipeline {
         stage('build') {
             steps {
                 script {
-                        sh 'docker build -t ${IMG_NAME} .'
+                        sh 'export HOME=/var/lib/jenkins && docker build -t ${IMG_NAME} .'       
                         sh 'docker tag ${IMG_NAME} ${DOCKER_REPO}:${IMG_NAME}'
                 }
             }
