@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mydjangoapp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mydjangoapp
+  template:
+    metadata:
+      labels:
+        app: mydjangoapp
+    spec:
+      containers:
+      - name: job_portal
+        image: mohit3252/job_portal
+        ports:
+        - containerPort: 8000
