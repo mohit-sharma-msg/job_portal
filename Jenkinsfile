@@ -6,12 +6,6 @@ pipeline {
         K8S_DEPLOYMENT = 'job_portal'
     }
 
-    stages {
-        stage('Checkout Code') {
-            steps {
-                git 'https://github.com/mohit-sharma-msg/job_portal'
-            }
-        }
 
         stage('Build Docker Image') {
             steps {
