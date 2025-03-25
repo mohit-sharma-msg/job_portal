@@ -6,15 +6,6 @@ pipeline {
         K8S_DEPLOYMENT = 'job_portal'
     }
 
-
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    sh "docker build -t ${IMAGE_NAME}:latest ."
-                }
-            }
-        }
-
         stage('Push to Docker Hub') {
             steps {
                 withDockerRegistry([credentialsId: 'docker-hub-credentials', url: '']) {
