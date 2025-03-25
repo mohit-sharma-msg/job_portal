@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mydjangoapp
+  name: job_portal
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: mydjangoapp
+      app: job_portal
   template:
     metadata:
       labels:
-        app: mydjangoapp
+        app: job_portal
     spec:
       containers:
       - name: job_portal
