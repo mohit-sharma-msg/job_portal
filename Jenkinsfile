@@ -1,9 +1,9 @@
 pipeline {
     agent any
     environment {
-        IMG_NAME = 'jobportal'
-        DOCKER_REPO = 'mohit3252/job_portal'
-        K8S_DEPLOYMENT = 'job_portal'
+        IMG_NAME = 'job-portal'
+        DOCKER_REPO = 'mohit3252/job-portal'
+        K8S_DEPLOYMENT = 'job-portal'
     }
     stages {
         stage('build') {
@@ -28,8 +28,8 @@ pipeline {
         }
             stage('Deploy to Kubernetes') {
             steps {
-                sh "kubectl apply -f k8s/"
-                sh "kubectl rollout restart deployment/${K8S_DEPLOYMENT}"
+                sh "kubectl apply -f k8s/deployment.yaml"
+                sh "kubectl apply -f k8s/service.yaml"
             }
         }
     }

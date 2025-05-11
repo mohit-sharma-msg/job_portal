@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: job_portal-service
+  name: job-portal
 spec:
   selector:
-    app: job_portal
+    app: job-portal
   ports:
     - protocol: TCP
       port: 80

@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: job_portal
+  name: job-portal
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: job_portal
+      app: job-portal
   template:
     metadata:
       labels:
-        app: job_portal
+        app: job-portal
     spec:
       containers:
-      - name: job_portal
-        image: mohit3252/job_portal
+      - name: job-portal
+        image: mohit3252/job-portal
         ports:
         - containerPort: 8000
