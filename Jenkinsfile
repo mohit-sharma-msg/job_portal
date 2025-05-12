@@ -26,11 +26,15 @@ pipeline {
                 }
             }
         }
-            stage('Deploy to Kubernetes') {
+        stage("Deploy on Kubernetes") {
             steps {
-                sh "kubectl apply -f k8s/deployment.yaml"
-                sh "kubectl apply -f k8s/service.yaml"
+                script {
+                    withKubeConfig([credentialsId: 'kubernetes-creds', serverUrl: 'https://10.0.0.100:6443']) {
+                        sh "kubectl apply -f deployment.yaml"
+                    }
+                }
             }
         }
+        
     }
-}
+
