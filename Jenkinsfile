@@ -3,7 +3,6 @@ pipeline {
     environment {
         IMG_NAME = 'job-portal'
         DOCKER_REPO = 'mohit3252/job-portal'
-        K8S_DEPLOYMENT = 'job-portal'
     }
     stages {
         stage('build') {
@@ -23,15 +22,6 @@ pipeline {
                         sh 'docker push ${DOCKER_REPO}:${IMG_NAME}'
                     }
 
-                }
-            }
-        }
-        stage("Deploy on Kubernetes") {
-            steps {
-                script {
-                    withKubeConfig([credentialsId: 'kubernetes-creds', serverUrl: 'https://192.168.49.2:8443']) {
-                        sh "kubectl apply -f deployment.yaml"
-                    }
                 }
             }
         }
