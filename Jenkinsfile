@@ -33,8 +33,6 @@ pipeline {
                 }
             }
         }
-
-    stages {
         stage('Configure Kubeconfig') {
             steps {
                 // Inject the Kubernetes token stored as a Secret Text in Jenkins
@@ -70,7 +68,7 @@ EOF
             }
         }
     }
-}
+
 
     }
 }
