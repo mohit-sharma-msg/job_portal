@@ -21,7 +21,7 @@ pipeline {
                 }
             }
         }
-
+        
         stage('Push to DockerHub') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'DockerHub-LG', passwordVariable: 'PSWD', usernameVariable: 'LOGIN')]) {
@@ -69,6 +69,5 @@ EOF
         }
     }
 
-
     }
-}
+
