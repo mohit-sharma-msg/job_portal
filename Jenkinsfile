@@ -64,7 +64,6 @@ EOF
 
                         echo "Testing Kubernetes connection..."
                         kubectl get namespaces
-                        kubectl get pods
                     '''
                 }
             }
@@ -73,8 +72,18 @@ EOF
         stage('Deploy to Kubernetes') {
             steps {
                 script {
+                    echo 'Deploying to Kubernetes...'
                     sh 'kubectl apply -f k8s/deployment.yaml'
                     sh 'kubectl apply -f k8s/service.yaml'
+                }
+            }
+        }
+                    
+        stage('Verify Deployment') {
+            steps {
+                script {
+                    sh 'kubectl get pods'
+                    sh 'kubectl get svc'
                 }
             }
         }
