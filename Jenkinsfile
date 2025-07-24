@@ -12,7 +12,7 @@ pipeline {
         K8S_SERVER = 'https://192.168.49.2:8443'
     }
         triggers {
-        scm('H/5 * * * *') // polls Git every 5 minutes
+        pollSCM('H/5 * * * *') // Polls Git every 5 minutes
     }
     stages {
         stage('Build Docker Image') {
