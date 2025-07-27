@@ -3,38 +3,67 @@ pipeline {
 
     environment {
         IMG_NAME = 'jobportal'
+        
+        TIMESTAMP = "" // Will be set dynamically
+        
         DOCKER_REPO = 'mohit3252/job_portal'
         IMAGE_TAG = "${DOCKER_REPO}:${IMG_NAME}"
-                // Set the path for the kubeconfig file
-        KUBECONFIG = "${WORKSPACE}/kubeconfig"
-        
-        // Kubernetes API server URL (change this to match your cluster)
+        KUBECONFIG = "${WORKSPACE}/kubeconfig" 
         K8S_SERVER = 'https://192.168.49.2:8443'
     }
         triggers {
-        pollSCM('H/5 * * * *') // Polls Git every 5 minutes
+        pollSCM('H/5 * * * *') 
     }
     stages {
-        stage('Build Docker Image') {
+                stage('Checkout') {
+            steps {
+                git credentialsId: 'github-creds', url: 'https://github.com/mohit-sharma-msg/job_portal.git'
+            }
+        }
+        stage('Prepare Timestamp Tag') {
             steps {
                 script {
-                    sh "export HOME=/var/lib/jenkins && docker build -t ${IMG_NAME} ."
-                    sh "docker tag ${IMG_NAME} ${IMAGE_TAG}"
+                    def ts = new Date().format("yyyy-MM-dd-HH-mm", TimeZone.getTimeZone('Asia/Kolkata'))
+                    env.IMAGE_TAG = "${DOCKER_IMAGE}:${ts}"
                 }
             }
         }
-        
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    sh '''
+                        export HOME=/var/lib/jenkins
+                        docker build -t ${IMG_NAME} .
+                        docker tag ${IMG_NAME} ${IMAGE_TAG}
+                    '''
+                }
+            }
+        }
+
         stage('Push to DockerHub') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'DockerHub-LG', passwordVariable: 'PSWD', usernameVariable: 'LOGIN')]) {
                     script {
-                        sh "echo ${PSWD} | docker login -u ${LOGIN} --password-stdin"
-                        sh "docker push ${IMAGE_TAG}"
-                        sh "docker logout"
+                        sh '''
+                            echo "$PSWD" | docker login -u "$LOGIN" --password-stdin
+                            docker push ${IMAGE_TAG}
+                            docker logout
+                        '''
                     }
                 }
             }
         }
+    }
+
+    post {
+        success {
+            echo "✅ Image pushed: ${IMAGE_TAG}"
+        }
+        failure {
+            echo "❌ Failed to push Docker image."
+        }
+    }
         stage('Configure Kubeconfig') {
             steps {
                 // Inject the Kubernetes token stored as a Secret Text in Jenkins
