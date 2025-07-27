@@ -15,11 +15,6 @@ pipeline {
         pollSCM('H/5 * * * *') 
     }
     stages {
-                stage('Checkout') {
-            steps {
-                git credentialsId: 'github-creds', url: 'https://github.com/mohit-sharma-msg/job_portal.git'
-            }
-        }
         stage('Prepare Timestamp Tag') {
             steps {
                 script {
@@ -64,7 +59,7 @@ pipeline {
             echo "❌ Failed to push Docker image."
         }
     }
-}
+
         stage('Configure Kubeconfig') {
             steps {
                 // Inject the Kubernetes token stored as a Secret Text in Jenkins
