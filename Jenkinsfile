@@ -4,7 +4,7 @@ pipeline {
     environment {
         IMG_NAME = 'jobportal'
         DOCKER_REPO = 'mohit3252/job_portal'
-        IMAGE_TAG = "${DOCKER_REPO}:${IMG_NAME}"
+        IMAGE_TAG = "${IMG_NAME}:${TIMESTAMP}"
         TIMESTAMP = "${new Date().format('yyyyMMdd-HHmm', TimeZone.getTimeZone('IST'))}"
         KUBECONFIG = "${WORKSPACE}/kubeconfig"
         K8S_SERVER = 'https://192.168.49.2:8443'
@@ -18,15 +18,22 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    def imageTag = "myapp:${env.TIMESTAMP}"
-                    sh "docker build -t myrepo/${imageTag} ."
-                    sh "docker push myrepo/${imageTag}"
-                    
-
-                    }
+                    sh "export HOME=/var/lib/jenkins && docker build -t ${IMG_NAME} ."
+                    sh "docker tag ${IMG_NAME} ${IMAGE_TAG}"
                 }
             }
         }
+
+        stage('Push to DockerHub') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'DockerHub-LG', passwordVariable: 'PSWD', usernameVariable: 'LOGIN')]) {
+                    script {
+                        sh "echo ${PSWD} | docker login -u ${LOGIN} --password-stdin"
+                        sh "docker push ${IMAGE_TAG}"
+                        sh "docker logout"
+                    }
+                }
+            }
         stage('Configure Kubeconfig') {
             steps {
                 // Inject the Kubernetes token stored as a Secret Text in Jenkins
