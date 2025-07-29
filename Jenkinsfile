@@ -22,6 +22,7 @@ pipeline {
                     sh "docker build -t myrepo/${imageTag} ."
                     sh "docker push myrepo/${imageTag}"
 
+            }
                     
 
         }
