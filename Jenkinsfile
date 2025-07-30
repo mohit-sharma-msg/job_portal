@@ -3,7 +3,7 @@ pipeline {
     environment {
         IMG_NAME = 'jobportal'
         DOCKER_REPO = 'mohit3252/job_portal'
-        IMAGE_TAG = "${IMG_NAME}:${TIMESTAMP}"
+        IMAGE_TAG = "mohit3252/jobportal:${TIMESTAMP}"
         TIMESTAMP = "${new Date().format('yyyyMMdd-HHmm', TimeZone.getTimeZone('IST'))}"
         KUBECONFIG = "${WORKSPACE}/kubeconfig"
         K8S_SERVER = 'https://192.168.49.2:8443'
