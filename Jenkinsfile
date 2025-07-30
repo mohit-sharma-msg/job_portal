@@ -1,6 +1,5 @@
 pipeline {
     agent any
-
     environment {
         IMG_NAME = 'jobportal'
         DOCKER_REPO = 'mohit3252/job_portal'
@@ -23,7 +22,7 @@ pipeline {
                 }
             }
         }
-
+        
         stage('Push to DockerHub') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'DockerHub-LG', passwordVariable: 'PSWD', usernameVariable: 'LOGIN')]) {
@@ -34,6 +33,7 @@ pipeline {
                     }
                 }
             }
+        }
         stage('Configure Kubeconfig') {
             steps {
                 // Inject the Kubernetes token stored as a Secret Text in Jenkins
@@ -69,4 +69,5 @@ EOF
             }
         }
     }
-    }
+    
+    
