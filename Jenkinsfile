@@ -4,7 +4,7 @@ pipeline {
         IMG_NAME = 'jobportal'
         DOCKER_REPO = 'mohit3252/job_portal'
         IMAGE_TAG = "mohit3252/jobportal:${TIMESTAMP}"
-        TIMESTAMP = "${new Date().format('yyyyMMdd-HHmm', TimeZone.getTimeZone('IST'))}"
+        TIMESTAMP = "${new Date().format('HHmm-MMddyyyy', TimeZone.getTimeZone('IST'))}"
         KUBECONFIG = "${WORKSPACE}/kubeconfig"
         K8S_SERVER = 'https://192.168.49.2:8443'
     }
@@ -37,7 +37,7 @@ pipeline {
     stage('Configure Kubeconfig') {
             steps {
                 // Inject the Kubernetes token stored as a Secret Text in Jenkins
-                withCredentials([string(credentialsId: 'k8s-api-token', variable: 'K8S_TOKEN')]) {
+                withCredentials([string(credentialsId: 'K8S_TOKEN', variable: 'K8S_TOKEN')]) {
                     sh '''
                         echo "Creating kubeconfig file..."
 
