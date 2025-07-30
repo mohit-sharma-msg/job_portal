@@ -23,7 +23,7 @@ pipeline {
             }
         }
         
-        stage('Push to DockerHub') {
+    stage('Push to DockerHub') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'DockerHub-LG', passwordVariable: 'PSWD', usernameVariable: 'LOGIN')]) {
                     script {
@@ -33,7 +33,7 @@ pipeline {
                     }
                 }
             }
-        stage('Configure Kubeconfig') {
+    stage('Configure Kubeconfig') {
             steps {
                 // Inject the Kubernetes token stored as a Secret Text in Jenkins
                 withCredentials([string(credentialsId: 'k8s-api-token', variable: 'K8S_TOKEN')]) {
