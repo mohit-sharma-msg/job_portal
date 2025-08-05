@@ -7,6 +7,8 @@ pipeline {
         TIMESTAMP = "${new Date().format('HHmm-MMddyyyy', TimeZone.getTimeZone('IST'))}"
         KUBECONFIG = "${WORKSPACE}/kubeconfig"
         K8S_SERVER = 'https://192.168.49.2:8443'
+        SONARQUBE_SERVER = 'SonarQube'
+        
     }
     triggers {
     pollSCM('H/5 * * * *')  // Every 5 minutes
@@ -83,7 +85,26 @@ EOF
                 }
             }
         }
-        
+            stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/mohit-sharma-msg/job_portal.git'
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv("${SONARQUBE_SERVER}") {
+                    sh 'sonar-scanner -Dsonar.projectKey=python-jenkins-demo -Dsonar.sources=.'
+                }
+            }
+        }
+
+        stage('Quality Gate') {
+            steps {
+                waitForQualityGate abortPipeline: true
+            }
+        }
     }
 
     }
