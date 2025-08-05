@@ -105,8 +105,6 @@ EOF
                 waitForQualityGate abortPipeline: true
             }
         }
-    }
-
-    }
-    }
     
+    }
+    }
