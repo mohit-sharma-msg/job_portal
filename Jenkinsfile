@@ -86,11 +86,7 @@ EOF
             }
         }
         
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/mohit-sharma-msg/job_portal.git'
-            }
-        }
+
 
         stage('SonarQube Analysis') {
             steps {
