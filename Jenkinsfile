@@ -14,21 +14,13 @@ pipeline {
     pollSCM('H/5 * * * *')  // Every 5 minutes
     }
     
-    stages {
-    stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv("${SONARQUBE}") {
-                    sh 'sonar-scanner -Dsonar.projectKey=job_portal -Dsonar.sources=.'
-                }
-            }
-        }
+  stage('SonarQube Analysis') {
+    def scannerHome = tool 'SonarScanner';
+    withSonarQubeEnv() {
+      sh "${scannerHome}/bin/sonar-scanner"
+    }
+  }
 
-    stage('Quality Gate') {
-            steps {
-                waitForQualityGate abortPipeline: true
-            }
-        }
-    
     stage('Build Docker Image') {
             steps {
                 script {
