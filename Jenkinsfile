@@ -13,8 +13,23 @@ pipeline {
     triggers {
     pollSCM('H/5 * * * *')  // Every 5 minutes
     }
+    
     stages {
-        stage('Build Docker Image') {
+    stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv("${SONARQUBE}") {
+                    sh 'sonar-scanner -Dsonar.projectKey=job_portal -Dsonar.sources=.'
+                }
+            }
+        }
+
+    stage('Quality Gate') {
+            steps {
+                waitForQualityGate abortPipeline: true
+            }
+        }
+    
+    stage('Build Docker Image') {
             steps {
                 script {
                     sh "export HOME=/var/lib/jenkins && docker build -t ${IMG_NAME} ."
@@ -86,21 +101,5 @@ EOF
             }
         }
         
-
-
-        stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv("${SONARQUBE_SERVER}") {
-                    sh 'sonar-scanner -Dsonar.projectKey=python-jenkins-demo -Dsonar.sources=.'
-                }
-            }
-        }
-
-        stage('Quality Gate') {
-            steps {
-                waitForQualityGate abortPipeline: true
-            }
-        }
-    
     }
     }
