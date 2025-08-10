@@ -3,6 +3,7 @@ pipeline {
     
         tools {
         sonarQubeScanner 'SonarScanner'
+        }
             
     environment {
         IMG_NAME = 'jobportal'
@@ -112,6 +113,5 @@ pipeline {
                 }
             }
             
-        }
         }
         }
