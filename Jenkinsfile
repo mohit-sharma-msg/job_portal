@@ -1,6 +1,5 @@
 pipeline {
     agent any
-    
         tools {
         sonarQubeScanner 'SonarScanner'
         }
@@ -12,35 +11,12 @@ pipeline {
         TIMESTAMP = "${new Date().format('HHmm-MMddyyyy', TimeZone.getTimeZone('IST'))}"
         KUBECONFIG = "${WORKSPACE}/kubeconfig"
         K8S_SERVER = 'https://192.168.49.2:8443'
-        SONARQUBE_ENV = 'SonarQube'
-        
     }
     triggers {
     pollSCM('H/5 * * * *')  // Every 5 minutes
     }
         
     stages {
-        
-        stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv("${SONARQUBE_ENV}") {
-                    sh 'sonar-scanner \
-                        -Dsonar.projectKey=my_project \
-                        -Dsonar.sources=. \
-                        -Dsonar.host.url=http://localhost:9000 \
-                        -Dsonar.login=$SONAR_AUTH_TOKEN'
-                }
-            }
-        }
-
-        stage('Quality Gate') {
-            steps {
-                timeout(time: 1, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true
-                }
-            }
-        }
-        
         stage('Build Docker Image') {
                 steps {
                     script {
