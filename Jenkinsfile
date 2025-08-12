@@ -34,7 +34,29 @@ pipeline {
                 }
              }
 
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv("${SONARQUBE}") {
+                    withCredentials([string(credentialsId: 'sonar', variable: 'SONAR_TOKEN')]) {
+                        sh """
+                        sonar-scanner \
+                          -Dsonar.projectKey=myapp \
+                          -Dsonar.sources=. \
+                          -Dsonar.host.url=$SONAR_HOST_URL \
+                          -Dsonar.login=$SONAR_TOKEN
+                        """
+                    }
+                }
+            }
+        }
 
+        stage('Trivy Security Scan') {
+            steps {
+                sh """
+                trivy image --severity HIGH,CRITICAL --exit-code 1 --format table ${IMG_NAME}
+                """
+            }
+        }
         
         stage('Configure Kubeconfig') {
                 steps {
