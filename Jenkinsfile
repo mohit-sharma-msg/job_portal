@@ -1,8 +1,7 @@
 pipeline {
     agent any
     environment {
-        IMAGE_NAME = "jobportal"
-        IMAGE_TAG  = "2309-08122025"
+        IMG_NAME = 'jobportal:2309-08122025'
         DOCKER_REPO = 'mohit3252/job_portal'
         IMAGE_TAG = "mohit3252/jobportal:${TIMESTAMP}"
         TIMESTAMP = "${new Date().format('HHmm-MMddyyyy', TimeZone.getTimeZone('IST'))}"
