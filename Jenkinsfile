@@ -8,6 +8,7 @@ pipeline {
         TIMESTAMP = "${new Date().format('HHmm-MMddyyyy', TimeZone.getTimeZone('IST'))}"
         KUBECONFIG = "${WORKSPACE}/kubeconfig"
         K8S_SERVER = 'https://192.168.49.2:8443'
+        SONARQUBE = "MySonarQube"
     }
     triggers {
     pollSCM('H/5 * * * *')  // Every 5 minutes
@@ -33,6 +34,31 @@ pipeline {
                     }
                 }
              }
+
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv("${SONARQUBE}") {
+                    withCredentials([string(credentialsId: 'sonar', variable: 'SONAR_TOKEN')]) {
+                        sh """
+                        sonar-scanner \
+                          -Dsonar.projectKey=myapp \
+                          -Dsonar.sources=. \
+                          -Dsonar.host.url=$SONAR_HOST_URL \
+                          -Dsonar.login=$SONAR_TOKEN
+                        """
+                    }
+                }
+            }
+        }
+
+        stage('Trivy Security Scan') {
+            steps {
+                sh """
+                trivy image --severity HIGH,CRITICAL --exit-code 1 --format table ${DOCKER_IMAGE}
+                """
+            }
+        }
+        
         stage('Configure Kubeconfig') {
                 steps {
                     // Inject the Kubernetes token stored as a Secret Text in Jenkins
