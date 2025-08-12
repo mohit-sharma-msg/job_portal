@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     tools {
-        sonarScanner 'sonar'
+        SonarScanner 'sonar'
     }  
     environment {
         IMG_NAME = 'jobportal'
