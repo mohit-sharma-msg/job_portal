@@ -2,9 +2,8 @@ pipeline {
     agent any
     
     tools {
-     sonarScanner 'Sonar'
-          }
-
+        sonarScanner 'sonar-scanner'
+        
     environment {
         IMG_NAME = 'jobportal'
         DOCKER_REPO = 'mohit3252/job_portal'
