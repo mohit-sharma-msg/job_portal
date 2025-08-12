@@ -1,6 +1,7 @@
 pipeline {
     agent any
     environment {
+        DOCKER_IMAGE = "jobportal:2309-08122025" 
         IMG_NAME = 'jobportal'
         DOCKER_REPO = 'mohit3252/job_portal'
         IMAGE_TAG = "mohit3252/jobportal:${TIMESTAMP}"
