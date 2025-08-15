@@ -7,7 +7,7 @@ pipeline {
         TIMESTAMP = "${new Date().format('HHmm-MMddyyyy', TimeZone.getTimeZone('IST'))}"
         KUBECONFIG = "${WORKSPACE}/kubeconfig"
         K8S_SERVER = 'https://192.168.49.2:8443'
-        SONARQUBE = "MySonarQube"
+
     }
     triggers {
     pollSCM('H/5 * * * *')  // Every 5 minutes
